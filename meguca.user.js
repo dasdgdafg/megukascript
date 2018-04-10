@@ -2,6 +2,7 @@
 // @name        megucascript
 // @namespace   megucasoft
 // @description Does a lot of stuff
+// @require     test.js
 // @include     https://meguca.org/*
 // @include     https://chiru.no/*
 // @connect     meguca.org
