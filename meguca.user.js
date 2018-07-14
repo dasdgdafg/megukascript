@@ -9,7 +9,7 @@
 // @include     https://chiru.no/*
 // @connect     meguca.org
 // @connect     chiru.no
-// @version     3.4.6
+// @version     3.4.7
 // @author      medukasthegucas
 // @grant       GM_xmlhttpRequest
 // ==/UserScript==
@@ -592,7 +592,9 @@ function setObservers() {
                              !post.classList.contains("editing") &&
                              !post.classList.contains("reply-form")) {
                             handlePost(postContent);
-                            mgcPl_addNewSong(post.getElementsByTagName("figcaption")[0]);
+                            if (currentlyEnabledOptions.has("enablemegucaplayer")) {
+                                mgcPl_addNewSong(post.getElementsByTagName("figcaption")[0]);
+                            }
                         }
                     }
                 }
