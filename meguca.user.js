@@ -9,7 +9,7 @@
 // @include     https://chiru.no/*
 // @connect     meguca.org
 // @connect     chiru.no
-// @version     3.4.7
+// @version     3.5.0
 // @author      medukasthegucas
 // @grant       GM_xmlhttpRequest
 // ==/UserScript==
@@ -37,7 +37,8 @@ const onOffOptions = [["edenOption", "Eden Now Playing Banner"],
                       ["showDeletedPosts", "Show deleted posts"],
                       ["showWhoDeletedPosts", "Show who deleted/banned posts"],
                       ["filterPosts", "Filter posts"],
-                      ["preSubmitOption", "Enables pre-submit post processing (necessary for some functions)"]];
+                      ["preSubmitOption", "Enables pre-submit post processing (necessary for some functions)"],
+                      ["skeletonCount", "Shows humans / skeletons instead of humans / total"]];
 
 // The current settings (will be loaded before other methods are called)
 var currentlyEnabledOptions = new Set();
@@ -647,6 +648,32 @@ function setObservers() {
 
     if (currentlyEnabledOptions.has("imgsekritPosting")) {
         setupSecretObserver();
+    }
+
+    if (currentlyEnabledOptions.has("skeletonCount")) {
+        var counter = document.getElementById("sync-counter");
+        counter.title = "Unique connected IP human/skeleton count";
+        var counterConfig = { childList: true };
+        var counterObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                const reg = /(\d+) \/ (\d+)/;
+                if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                    var added = mutation.addedNodes[0];
+                    var oldText = added.textContent;
+                    var matches = oldText.match(reg);
+                    if (matches.length == 3) {
+                        var humans = parseInt(matches[1]);
+                        var total = parseInt(matches[2]);
+                        var skeletons = total - humans;
+                        var s1 = humans == 1 ? " human / " : " humans / ";
+                        var s2 = skeletons == 1 ? " skeleton" : " skeletons";
+                        var newText = humans + s1 + skeletons + s2;
+                        added.textContent = newText;
+                    }
+                }
+            });
+        });
+        counterObserver.observe(counter, counterConfig);
     }
 }
 
