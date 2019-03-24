@@ -9,7 +9,7 @@
 // @include     https://chiru.no/*
 // @connect     meguca.org
 // @connect     chiru.no
-// @version     3.6.0
+// @version     3.7.0
 // @author      medukasthegucas
 // @grant       GM_xmlhttpRequest
 // ==/UserScript==
@@ -38,7 +38,8 @@ const onOffOptions = [["edenOption", "Eden Now Playing Banner"],
                       ["showWhoDeletedPosts", "Show who deleted/banned posts"],
                       ["filterPosts", "Filter posts"],
                       ["preSubmitOption", "Enables pre-submit post processing (necessary for some functions)"],
-                      ["skeletonCount", "Shows humans / skeletons instead of humans / total"]];
+                      ["skeletonCount", "Shows humans / skeletons instead of humans / total"],
+                      ["skeletonLabels", "Show human / skeleton labels on the numbers when the above option is enabled"]];
 
 // The current settings (will be loaded before other methods are called)
 var currentlyEnabledOptions = new Set();
@@ -667,7 +668,12 @@ function setObservers() {
                         var skeletons = total - humans;
                         var s1 = humans == 1 ? " human / " : " humans / ";
                         var s2 = skeletons == 1 ? " skeleton" : " skeletons";
-                        var newText = humans + s1 + skeletons + s2;
+                        var newText;
+                        if (currentlyEnabledOptions.has("skeletonLabels")) {
+                            newText = humans + s1 + skeletons + s2;
+                        } else {
+                            newText = humans + " / " + skeletons;
+                        }
                         added.textContent = newText;
                     }
                 }
