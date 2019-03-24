@@ -9,7 +9,7 @@
 // @include     https://chiru.no/*
 // @connect     meguca.org
 // @connect     chiru.no
-// @version     3.5.0
+// @version     3.6.0
 // @author      medukasthegucas
 // @grant       GM_xmlhttpRequest
 // ==/UserScript==
@@ -872,6 +872,7 @@ function setup() {
     hackLatsOptions();
     if (currentlyEnabledOptions.has("enablemegucaplayer")) mgcPl_setupPlaylist();
     if (currentlyEnabledOptions.has("edenOption")) setUpEdenBanner();
+    if (currentlyEnabledOptions.has("showDeletedPosts")) watchSocketForPostsDeletedOnCreation();
 }
 
 function downloadAll() {
