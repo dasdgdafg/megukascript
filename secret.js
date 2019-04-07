@@ -35,14 +35,8 @@ function secretButtonPressed() {
             fr.onload = function() {
                 var buffer = this.result;
                 var newfile = new File([buffer, te.encode(hiddenText)], file.name);
-                var possibleInputs = document.getElementsByName("image");
-                var realInput;
-                for (var i = 0; i < possibleInputs.length; i++) {
-                    if (possibleInputs[i].offsetParent != null) {
-                        realInput = possibleInputs[i];
-                        break;
-                    }
-                }
+                var realInput = document.querySelector("#post-controls [name=image]");
+
                 // weird hacks to set our modified file
                 // You can't set the files in a file input in javascript
                 // But meguca's code has a reference to the file input
