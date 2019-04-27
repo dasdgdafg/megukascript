@@ -71,7 +71,7 @@ const optionsDescription = {
     ],
     [
       "text",
-      '<br><a href="https://github.com/goatsalad/megukascript/blob/master/README.md" target="_blank">How do I use this?</a>' +
+      '<br><a href="https://github.com/dasdgdafg/megukascript/blob/master/README.md" target="_blank">How do I use this?</a>' +
         '<br>You have received <span id="chuu-counter">' +
         (localStorage.getItem("chuuCount", chuuCount) || 0) +
         "</span> chuu~'s"
